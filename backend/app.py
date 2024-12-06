@@ -42,6 +42,7 @@ class AuditLog(db.Model):
 def load_mdt_data():
     # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
     file_path = 'C:\\Users\\KC\\Documents\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
+    # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
         df.rename(columns={
@@ -63,7 +64,9 @@ def load_mdt_data():
 
 @app.route('/update-returned-tab', methods=['POST'])
 def update_returned_tab():
+    # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
     file_path = 'C:\\Users\\KC\\Documents\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
+    # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         updated_data = request.json
         df = pd.DataFrame(updated_data)
@@ -75,10 +78,14 @@ def update_returned_tab():
 
 @app.route('/generate-report', methods=['GET'])
 def generate_report():
+    # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
     file_path = 'C:\\Users\\KC\\Documents\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
+    # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         df = pd.read_excel(file_path, sheet_name='Returned', engine='openpyxl')
+        # Change the following path to where you want the report to be saved
         csv_path = 'C:\\Users\\KC\\Documents\\data-management-final-project-main\\data\\Returned_Report.csv'
+        # Example: csv_path = 'C:\\path_to_your_folder\\Returned_Report.csv'
         df.to_csv(csv_path, index=False)
         return jsonify({'message': 'Report generated successfully!', 'path': csv_path}), 200
     except Exception as e:
