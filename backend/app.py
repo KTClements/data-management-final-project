@@ -113,7 +113,7 @@ def add_user():
 @jwt_required()
 def load_mdt_data():
     # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
-    file_path = 'C:\\Users\\KC\\Desktop\\Data Management - final project\\data\\MDT INVENTORY.xlsx'
+    file_path = 'C:\\Users\\KC\\Desktop\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
     # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         df = pd.read_excel(file_path, engine='openpyxl')
@@ -138,7 +138,7 @@ def load_mdt_data():
 @jwt_required()
 def update_returned_tab():
     # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
-    file_path = 'C:\\Users\\KC\\Desktop\\Data Management - final project\\data\\MDT INVENTORY.xlsx'
+    file_path = 'C:\\Users\\KC\\Desktop\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
     # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         updated_data = request.json
@@ -153,12 +153,12 @@ def update_returned_tab():
 @jwt_required()
 def generate_report():
     # Change the following path to the correct location of MDT INVENTORY.xlsx on your machine
-    file_path = 'C:\\Users\\KC\\Desktop\\Data Management - final project\\data\\MDT INVENTORY.xlsx'
+    file_path = 'C:\\Users\\KC\\Desktop\\data-management-final-project-main\\data\\MDT INVENTORY.xlsx'
     # Example: file_path = 'C:\\path_to_your_folder\\MDT INVENTORY.xlsx'
     try:
         df = pd.read_excel(file_path, sheet_name='Returned', engine='openpyxl')
         # Change the following path to where you want the report to be saved
-        csv_path = 'C:\\Users\\KC\\Desktop\\Data Management - final project\\data\\Returned_Report.csv'
+        csv_path = 'C:\\Users\\KC\\Desktop\\data-management-final-project-main\\data\\Returned_Report.csv'
         # Example: csv_path = 'C:\\path_to_your_folder\\Returned_Report.csv'
         df.to_csv(csv_path, index=False)
         return jsonify({'message': 'Report generated successfully!', 'path': csv_path}), 200
