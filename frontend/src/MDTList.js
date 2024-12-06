@@ -3,22 +3,10 @@ import axios from 'axios';
 
 function MDTList() {
     const [mdts, setMdts] = useState([]); // State to hold MDT data
-    const [token, setToken] = useState(null); // JWT token for authentication
 
-    // Fetch token for authentication (mocked for demonstration)
+    // Fetch MDT data
     useEffect(() => {
-        axios.post('http://127.0.0.1:5000/login', { username: 'admin' })
-            .then(response => {
-                setToken(response.data.access_token);
-            })
-            .catch(error => console.error('Error fetching token:', error));
-    }, []);
-
-    useEffect(() => {
-        if (token) {
-            axios.get('http://127.0.0.1:5000/load-mdt-data', {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+        axios.get('http://127.0.0.1:5000/load-mdt-data')
             .then(response => {
                 console.log(response.data);
                 setMdts(response.data);
@@ -27,14 +15,11 @@ function MDTList() {
                 console.error('Error fetching MDT data:', error);
                 alert('Failed to fetch MDT data. Please try again later.');
             });
-        }
-    }, [token]);    
+    }, []);
 
     const handleUpdate = () => {
         // Update the Returned tab
-        axios.post('http://127.0.0.1:5000/update-returned-tab', mdts, {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+        axios.post('http://127.0.0.1:5000/update-returned-tab', mdts)
             .then(() => {
                 alert('Returned tab updated successfully!');
             })
@@ -46,9 +31,7 @@ function MDTList() {
 
     const handleGenerateReport = () => {
         // Generate a CSV report for the Returned tab
-        axios.get('http://127.0.0.1:5000/generate-report', {
-            headers: { Authorization: `Bearer ${token}` }
-        })
+        axios.get('http://127.0.0.1:5000/generate-report')
             .then(response => {
                 alert(`Report generated successfully! Path: ${response.data.path}`);
             })
@@ -92,8 +75,8 @@ function MDTList() {
                 </tbody>
             </table>
             <div>
-                <button onClick={handleUpdate} disabled={!token}>Update Returned Tab</button>
-                <button onClick={handleGenerateReport} disabled={!token}>Generate Report</button>
+                <button onClick={handleUpdate}>Update Returned Tab</button>
+                <button onClick={handleGenerateReport}>Generate Report</button>
             </div>
         </div>
     );
